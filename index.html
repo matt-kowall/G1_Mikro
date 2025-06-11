@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard pogodowy</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <main id="welcome">
+    <h1>Witamy!</h1>
+    <p>Dodaj miasto, aby zobaczyć prognozę godzinową (symulacja). Interakcje są mierzone do celów UX.</p>
+    <button id="startBtn">Start</button>
+  </main>
+
+  <main id="dashboard" hidden>
+    <h2>Dashboard pogodowy</h2>
+
+    <section id="cityInputSection">
+      <label for="cityInput" class="visually-hidden">Wprowadź miasto</label>
+      <input type="text" id="cityInput" list="cityOptions" placeholder="Wprowadź miasto" aria-label="Wprowadź miasto" />
+      <datalist id="cityOptions">
+        <option value="Warszawa"></option>
+        <option value="Kraków"></option>
+        <option value="Gdańsk"></option>
+        <option value="Wrocław"></option>
+        <option value="Poznań"></option>
+        <option value="Katowice"></option>
+        <option value="Rzeszów"></option>
+        <option value="Bydgoszcz"></option>
+        <option value="Szczecin"></option>
+        <option value="Olsztyn"></option>
+      </datalist>
+      <button id="addCityBtn" aria-label="Dodaj miasto">Dodaj</button>
+    </section>
+
+    <section id="cityList" aria-live="polite"></section>
+    <section id="weatherResults" aria-live="polite"></section>
+
+    <section id="timeSliderSection" hidden>
+      <label for="hourSlider">Godzina: <span id="currentHour">0</span>:00</label>
+      <input type="range" id="hourSlider" min="0" max="23" value="0" />
+    </section>
+
+    <button id="endBtn" class="end-button">Zakończ</button>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

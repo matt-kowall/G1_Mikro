@@ -1,0 +1,461 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#cityInput,
+#defaultCitySelect {
+  width: 180px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  margin: 5px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button,
+.end-button {
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  padding: 9px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+button:active,
+.end-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0 0 0 / 0.2);
+}
+
+.end-button {
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px 35px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #28a745;
+  border-radius: 8px;
+}
+
+.end-button:hover,
+.end-button:focus-visible {
+  background-color: #218838;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.end-button.clicked {
+  animation: pulse 0.5s ease;
+}
+
+#cityList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 700px;
+}
+
+.city-tag {
+  background: #0078d7;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: default;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.city-tag:hover {
+  background-color: #005a9e;
+}
+
+.city-tag .remove {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1;
+  padding-left: 6px;
+  outline: none;
+  user-select: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.city-tag .remove:hover,
+.city-tag .remove:focus {
+  color: greenyellow;
+  animation: pulseSpan 1.6s infinite ease-in-out;
+  transform: scale(1.3);
+}
+
+#weatherResults {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 720px;
+}
+
+.weather-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0 0 0 / 0.15);
+  padding: 15px;
+  max-width: 280px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  user-select: none;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.weather-card:hover {
+  box-shadow: 0 6px 18px rgba(0 0 0 / 0.25);
+  transform: translateY(-5px);
+}
+
+.weather-card h3,
+.weather-card p {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.weather-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: nowrap;
+}
+
+button.day-switcher {
+  margin: 0 5px 7px 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: 1px solid #0288d1;
+  border-radius: 4px;
+}
+
+button.day-switcher:hover,
+button.day-switcher:focus {
+  background-color: #005a9e;
+  outline: none;
+  box-shadow: 0 6px 15px rgba(0 0 0 / 0.25);
+  transform: translateY(-5px);
+}
+
+.forecast-day {
+  max-width: 80px;
+  padding: 10px;
+  font-size: 14px;
+  text-transform: capitalize;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0 0 0 / 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: default;
+  user-select: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.forecast-day:hover {
+  box-shadow: 0 6px 15px rgba(0 0 0 / 0.25);
+  transform: translateY(-5px);
+}
+
+.forecast-date {
+  font-weight: 600;
+  font-size: 13px;
+  color: #555;
+}
+
+.forecast-temp {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0078d7;
+}
+
+.forecast-desc img,
+.weather-icon {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.forecast-desc img {
+  width: 30px;
+  height: 30px;
+}
+
+.weather-card:hover img,
+.forecast-day:hover img {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 5px rgba(0 120 215 / 0.5));
+}
+
+.forecast-day:hover .forecast-desc img {
+  transform: rotate(10deg) scale(2);
+}
+
+.chart-toggle {
+  cursor: pointer;
+  padding: 9px 15px;
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  user-select: none;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.chart-toggle:hover,
+.chart-toggle:focus-visible {
+  background-color: #005a9e;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+
+.chart-toggle:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 1.2);
+}
+
+.weather-card.loading {
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+  height: 170px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f7f7f7 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.weather-card.error {
+  background: #ffe6e6;
+  color: #a00;
+  text-align: center;
+}
+
+.alert-box {
+  background: #ffe5e5;
+  color: #900;
+  border-left: 4px solid red;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 250px;
+}
+
+.chart-wrapper canvas {
+  width: 100%;
+  height: 250px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+.pulse-icon {
+  animation: pulse 2.5s infinite ease-in-out;
+}
+
+.clicked-icon {
+  transform: scale(1.2) rotate(40deg);
+  transition: transform 0.15s ease;
+}
+
+@media (max-width: 650px) {
+  #cityInput,
+  #defaultCitySelect {
+    width: 100%;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  #weatherResults {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+button:focus,
+.end-button:focus,
+.chart-toggle:focus,
+button.day-switcher:focus,
+.city-tag .remove:focus {
+  outline: none;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+  animation: pulseBorder 1.5s infinite;
+  transform: scale(1.05);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+@keyframes pulseBorder {
+  0%,
+  100% {
+    box-shadow: 0 0 8px #3b82f6;
+  }
+  50% {
+    box-shadow: 0 0 14px #60a5fa;
+  }
+}
+
+@keyframes expand {
+  from {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    max-height: 300px;
+    opacity: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+@keyframes collapse {
+  from {
+    max-height: 300px;
+    opacity: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.chart-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  animation-fill-mode: forwards;
+}
+
+.chart-wrapper.expanded {
+  animation: expand 0.5s ease forwards;
+}
+
+.chart-wrapper.collapsing {
+  animation: collapse 0.5s ease forwards;
+}
+
+.remove:hover {
+  display: inline-block;
+  color: greenyellow;
+  animation: pulseSpan 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseSpan {
+  0%,
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.8;
+  }
+}
+
+.weather-card {
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(4px);
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+
+.weather-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.weather-card.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.weather-card.loading {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
