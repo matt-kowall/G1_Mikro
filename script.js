@@ -1,4 +1,4 @@
-const sessionId = Math.random().toString(36).slice(2, 8);
+const sessionId = '1' + Math.random().toString(36).slice(2, 8);
 
 let clickCount = 0,
   focusCount = 0,
